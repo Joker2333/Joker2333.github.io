@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives: 2019/7 | Hexo</title>
+  <title>内网初探 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/07/index.html">
+  <meta name="description" content="这次是一点点的内网渗透体验，还是没能跟上落叶师傅的步伐，哈哈。">
+<meta name="keywords" content="内网,初探">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网初探">
+<meta property="og:url" content="http://yoursite.com/2019/09/17/内网初探/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这次是一点点的内网渗透体验，还是没能跟上落叶师傅的步伐，哈哈。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-09-17T13:28:45.529Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="内网初探">
+<meta name="twitter:description" content="这次是一点点的内网渗透体验，还是没能跟上落叶师傅的步伐，哈哈。">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,40 +65,68 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/07/20/CVE-2019-11580/" class="archive-article-date">
-  <time datetime="2019-07-20T13:54:52.000Z" itemprop="datePublished">Jul 20</time>
+        <section id="main"><article id="post-内网初探" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/17/内网初探/" class="article-date">
+  <time datetime="2019-09-17T09:00:39.000Z" itemprop="datePublished">2019-09-17</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/20/CVE-2019-11580/">CVE-2019-11580</a>
+    <h1 class="article-title" itemprop="name">
+      内网初探
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这次是一点点的内网渗透体验，还是没能跟上落叶师傅的步伐，哈哈。</p>
+<a id="more"></a>
 
+<h1 id="新的知识点"><a href="#新的知识点" class="headerlink" title="新的知识点"></a>新的知识点</h1><p>先梳理一下之前一听就懵逼的点吧</p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>之前一直听师傅们说负载负载啥的，听的一脸懵逼，这次遇到了负载才知道是个啥，官方说法是:</p>
+<ul>
+<li>负载均衡是高可用网络基础架构的关键组件，通常用于将工作负载分布到多个服务器来提高网站、应用、数据库或其他服务的性能和可靠性。<br>我的理解就是负载就是为了防止访问的流量过大的时候，服务器宕机。所以访问过大时会被分流到服务器群中的随机一台机器去。</li>
+</ul>
+<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>这个东西我看了半天的文章，真的是用脑子想了的，然后才大概搞明白了。<br>我的理解是，一台原本不能出网的机子，通过同一网段能够出网的机子当作跳板机（就是一个类似ssr的代理服务器），把外网访问的流量进行转发，使得原本不能访问这台内网机子的外网机器可以访问。具体操作的话，我暂时只知道一个，利用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ python neoreg.py -h</span><br><span class="line">使用: neoreg.py [-h] -u URI -k KEY [-l IP] [-p PORT] [-s] [-H LINE] [-c LINE]</span><br><span class="line">[-x LINE] [--read-buff Bytes] [--read-interval MS]</span><br><span class="line">[--max-threads N] [-v]</span><br></pre></td></tr></table></figure> 这个东西，可以生成web turnnal，然后连接后就可以利用 Proxifier 工具 （kali上用的是proxychains，但是我莫得成功过，奇怪。。。。）就可以连接到代理了。</p>
+<ul>
+<li><a href="https://www.hackdoor.org/d/266-neo-regeorg" target="_blank" rel="noopener">Neo-reGeorg的使用方法说明</a></li>
+<li><a href="https://blog.csdn.net/u013066730/article/details/88788191" target="_blank" rel="noopener">Proxifier使用教程</a></li>
+<li><a href="http://shouce.jb51.net/kali-linux-tutorial/11.html" target="_blank" rel="noopener">设置ProxyChains</a></li>
+</ul>
+<p>关于代理这个东西，内网渗透做一些内网资产发现的操作的话，今天不要利用代理来做，这样会让隧道崩掉导致团队需要重新打一次隧道。最好就是扔工具上去直接跑。【某大佬警告】</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/17/内网初探/" data-id="ck0nvipjk00039vonhrnpjzon" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内网/">内网</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/初探/">初探</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/08/23/Sql-getshell/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Sql注入到getshell的失败的尝试</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         
